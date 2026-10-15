@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Método de Newton · Diferencias Divididas</title>
+  
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Hoja de estilos -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <h1>MÉTODO DE NEWTON</h1>
+      <div class="subtitle">Diferencias Divididas · Interpolación Polinomial (Sesión 9)</div>
+    </div>
+  </header>
+
+  <div class="method-panel">
+    <div class="problem-info">
+      <strong>Contexto:</strong> Degradación de rendimiento de una API REST crítica. 
+      Carga concurrente <code>x</code> (en 100 req/s) vs Latencia medida <code>y</code> (ms).
+      <br><strong>Objetivo:</strong> Estimar la latencia cuando el sistema opera a <strong>500 req/s (x = 5)</strong>.
+    </div>
+
+    <div class="main-grid">
+      <!-- PANEL IZQUIERDO: ENTRADA -->
+      <aside>
+        <div class="panel-title">⚙️ Entrada de Datos</div>
+        <div id="pointsContainer" class="input-stack">
+          <!-- Los puntos se generan aquí -->
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-success" onclick="addPoint()">➕ Agregar Punto</button>
+          <button class="btn btn-primary" onclick="calcularNewton()">🚀 Calcular Newton</button>
+          <button class="btn btn-ghost" onclick="resetear()">🔄 Restaurar Valores</button>
+        </div>
+
+        <div class="eval-section">
+          <div class="field">
+            <label class="warning-label">🎯 Punto a evaluar x (100 req/s)</label>
+            <input type="number" id="xEval" value="5" step="0.1" class="warning-input">
+          </div>
+        </div>
+
+        <div id="messageBox"></div>
+      </aside>
+
+      <!-- PANEL DERECHO: RESULTADOS -->
+      <main id="resultados" class="results-section hidden">
+        
+        <div class="result-card">
+          <h3>📋 Tabla de Datos Experimentales</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr><th>Punto (i)</th><th>Carga x (100 req/s)</th><th>Latencia y (ms)</th></tr>
+              </thead>
+              <tbody id="dataBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <h3>📊 Tabla de Diferencias Divididas</h3>
+          <div class="table-responsive" id="ddTableContainer"></div>
+          <div class="formula-box">
+            <div class="comment">// Coeficientes del polinomio (diagonal superior):</div>
+            <div id="coeficientesDisplay" class="highlight"></div>
+          </div>
+        </div>
+
+        <div class="result-card result-highlight">
+          <h3>📈 Resultado de la Interpolación</h3>
+          <div class="result-value" id="resultadoFinal">--</div>
+          <p class="result-text">Latencia estimada para <strong id="xEvalDisplay">5</strong> (500 req/s)</p>
+        </div>
+
+        <div class="result-card">
+          <h3>📝 Polinomio de Newton P(x)</h3>
+          <div id="polinomioNewton" class="formula-box formula-center">--</div>
+          
+          <div class="standard-form">
+            <h4 class="success-title">📊 Forma Estándar</h4>
+            <div id="polinomioEstandar" class="standard-text">--</div>
+            <div class="coef-grid" id="coefGrid"></div>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <h4>✅ Validación: El polinomio pasa por los puntos experimentales</h4>
+          <div id="validacion" class="validation-grid"></div>
+        </div>
+
+        <div class="step-box" id="stepsDisplay">
+          <h4>🔢 Desarrollo Paso a Paso</h4>
+          <div id="stepsContent"></div>
+        </div>
+
+        <div class="chart-wrapper">
+          <canvas id="newtonChart"></canvas>
+        </div>
+
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- Script principal -->
+<script src="script.js"></script>
+</body>
+</html>
